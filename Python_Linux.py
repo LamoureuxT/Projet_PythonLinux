@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
-df = pd.read_csv('/home/thibaut-l/Projet/bitcoin_price.csv',sep=',',names=['Date','Price'])
+df = pd.read_csv('//wsl.localhost/Ubuntu/home/thibaut-l/Projet/bitcoin_price.csv',sep=',',names=['Date','Price'])
 
 # Créer l'application Dash
 app = dash.Dash(__name__)
@@ -39,7 +39,7 @@ app.layout = html.Div([
                          style={'height': '5%', 'width': '5%'}),
                 html.H2("Bitcoin", style={"margin-left": "1rem"})],
              style={"display": "flex", "align-items": "center",'font-size': '2rem'}),
-    html.Div('${:,.2f}'.format(df['Price'][0]),style={'font-size': '3rem'}),
+    html.Div('${:,.2f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
     dcc.Graph(
         id='example-graph',
         figure={
