@@ -11,7 +11,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
-df = pd.read_csv(r'"\\wsl.localhost\Ubuntu\home\thibaut-l\Projet\bitcoin_price.csv"', sep=',', names=['Date', 'Price'])
+df = pd.read_csv(r'\home\thibaut-l\Projet\bitcoin_price.csv', sep=',', names=['Date', 'Price'])
 
 # Créer l'application Dash
 app = dash.Dash(__name__)
