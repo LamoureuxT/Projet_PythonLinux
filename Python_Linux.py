@@ -16,21 +16,36 @@ df = pd.read_csv('/home/ec2-user/Projet/bitcoin_price.csv', sep=',', names=['Dat
 # Créer l'application Dash
 app = dash.Dash(__name__)
 
-# Compute mean
-mean_price = df['Price'].mean()
-min_price = df['Price'].min()
-max_price = df['Price'].max()
+now = datetime.now().date()            
+start_day = datetime.combine(now, time.min)  
+end_day = datetime.combine(now, time.max)     
+df_day = df.loc[(df['Date'] >= start_day) & (df['Date'] <= end_day)] 
 
-table = html.Table([
-    html.Thead(
-        html.Tr([html.Th("Header 1"), html.Th("Header 2"), html.Th("Header 3")])
-    ),
-    html.Tbody([
-        html.Tr([html.Td("Row 1, Col 1"), html.Td("Row 1, Col 2"), html.Td("Row 1, Col 3")]),
-        html.Tr([html.Td("Row 2, Col 1"), html.Td("Row 2, Col 2"), html.Td("Row 2, Col 3")]),
-        html.Tr([html.Td("Row 3, Col 1"), html.Td("Row 3, Col 2"), html.Td("Row 3, Col 3")]),
+var = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
+col = 'red' if var < 0 else 'green'
+min_price = df_day['Price'].min()
+max_price = df_day['Price'].max()
+daily_volatility = round(df_day['Price'].std(),6)
+price_return = round((df_today['Price'].iloc[-1] - df_today['Price'].iloc[0]) / df_today['Price'].iloc[0] * 100,4)
+
+def generate_table():
+    table = html.Div([
+        html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
+        html.Table([
+            html.Thead(html.Tr([html.Th('Metric'), html.Th('Value')])),
+            html.Tbody([
+                html.Tr([html.Td('Min.'), html.Td(min_price)]),
+                html.Tr([html.Td('Max.'), html.Td(max_price)]),
+                html.Tr([html.Td('Vol.'), html.Td(daily_volatility)]),
+                html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
+                html.Tr([html.Td('Open price'), html.Td(df_day['Price'].iloc[0])]),
+                html.Tr([html.Td('Close price'), html.Td(df_day['Price'].iloc[-1])])
+        ])
+    ], className='table', style={'margin': 'auto'})
     ])
-])
+
+    return table
+
 
 # Créer la mise en page de l'application
 app.layout = html.Div([
@@ -40,22 +55,16 @@ app.layout = html.Div([
                 html.H2("Bitcoin", style={"margin-left": "1rem"})],
              style={"display": "flex", "align-items": "center",'font-size': '2rem'}),
     html.Div('${:,.2f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
+    html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color'=col}),
     dcc.Graph(
         id='example-graph',
         figure={
-            'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line'}],
-            'layout': {'title': 'Value over Time'}
+            'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'blue'}],
+            'layout':{'yaxis': {'range': [min_price, max_price]}}
         }
     ),
-    html.Table(
-        [html.Tr([html.Th('Stat'), html.Th('Price')])] +
-        [html.Tr([html.Td('Min'), html.Td('${:,.2f}'.format(min_price))]),
-        html.Tr([html.Td('Max'), html.Td('${:,.2f}'.format(max_price))]),
-        html.Tr([html.Td('Mean'), html.Td('${:,.2f}'.format(round(mean_price,2)))])
-        ],
-        style={'textAlign': 'center'},
-        className='stats-table'
-    ),
+    html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'}), 
+    style={'margin': '0 auto','max-width': '800px','font-family': 'Arial, sans-serif'})
 ])
 
 if __name__ == '__main__':
