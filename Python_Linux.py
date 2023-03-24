@@ -26,20 +26,20 @@ var = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price
 col = 'red' if var < 0 else 'green'
 min_price = df_day['Price'].min()
 max_price = df_day['Price'].max()
-daily_vol = round(df_day['Price'].std(),6)
-price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,4)
+daily_vol = round(df_day['Price'].std(),2)
+price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
 
 def generate_table():
     table = html.Div([
         html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
         html.Table([
             html.Tbody([
-                html.Tr([html.Td('Min.'), html.Td('${:,}'.format(min_price))]),
-                html.Tr([html.Td('Max.'), html.Td('${:,}'.format(max_price))]),
+                html.Tr([html.Td('Min.'), html.Td('${:,.0f}'.format(min_price))]),
+                html.Tr([html.Td('Max.'), html.Td('${:,.0f}'.format(max_price))]),
                 html.Tr([html.Td('Vol.'), html.Td(daily_vol)]),
                 html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
-                html.Tr([html.Td('Open price'), html.Td('${:,}'.format(df_day['Price'].iloc[0]))]),
-                html.Tr([html.Td('Close price'), html.Td('${:,}'.format(df_day['Price'].iloc[-1]))])
+                html.Tr([html.Td('Open price'), html.Td('${:,.0f}'.format(df_day['Price'].iloc[0]))]),
+                html.Tr([html.Td('Close price'), html.Td('${:,.0f}'.format(df_day['Price'].iloc[-1]))])
         ])
     ], className='table', style={'margin': 'auto'})
     ])
@@ -54,7 +54,7 @@ app.layout = html.Div([
                          style={'height': '5%', 'width': '5%'}),
                 html.H2("Bitcoin", style={"margin-left": "1rem"})],
              style={"display": "flex", "align-items": "center",'font-size': '2rem'}),
-    html.Div('${:,}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
+    html.Div('${:,.0f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
     html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col}),
     dcc.Graph(
         id='example-graph',
