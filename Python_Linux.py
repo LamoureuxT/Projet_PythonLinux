@@ -84,10 +84,8 @@ app.layout = html.Div([
                 style={
                     'border': '1px solid #ddd', 
                     'border-radius': '10px', 
-                    'margin-top': '20px', 
-                    'flex': '1', 
-                    'height': '100px',
-                    'width': '100%',
+                    'margin': '20px 20px 20px 20px', 
+                    'flex': '1',
                     'background-color': 'black',
                     'color': 'white'
                 }
@@ -113,7 +111,7 @@ app.layout = html.Div([
             }
         )
     )
-])
+],style={'background-color':'black'})
 
 
 
