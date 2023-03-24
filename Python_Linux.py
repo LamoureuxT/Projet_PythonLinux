@@ -63,8 +63,7 @@ app.layout = html.Div([
             'layout':{'yaxis': {'range': [min_price, max_price]}}
         }
     ),
-    html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'}), 
-    style={'margin': '0 auto','max-width': '800px','font-family': 'Arial, sans-serif'}
+    html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'})
 ])
 
 if __name__ == '__main__':
