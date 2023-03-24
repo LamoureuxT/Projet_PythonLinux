@@ -60,7 +60,7 @@ app.layout = html.Div([
         id='example-graph',
         figure={
             'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'lavender'}],
-            'layout':{'yaxis': {'range': [min_price, max_price]}}
+            'layout':{'yaxis': {'range': [25000, 30000]}}
         }
     ),
     html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'})
