@@ -33,14 +33,13 @@ def generate_table():
     table = html.Div([
         html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
         html.Table([
-            html.Thead(html.Tr([html.Th('Metric'), html.Th('Value')])),
             html.Tbody([
-                html.Tr([html.Td('Min.'), html.Td(min_price)]),
-                html.Tr([html.Td('Max.'), html.Td(max_price)]),
+                html.Tr([html.Td('Min.'), html.Td('${:,}'.format(min_price))]),
+                html.Tr([html.Td('Max.'), html.Td('${:,}'.format(max_price))]),
                 html.Tr([html.Td('Vol.'), html.Td(daily_vol)]),
                 html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
-                html.Tr([html.Td('Open price'), html.Td(df_day['Price'].iloc[0])]),
-                html.Tr([html.Td('Close price'), html.Td(df_day['Price'].iloc[-1])])
+                html.Tr([html.Td('Open price'), html.Td('${:,}'.format(df_day['Price'].iloc[0]))]),
+                html.Tr([html.Td('Close price'), html.Td('${:,}'.format(df_day['Price'].iloc[-1]))])
         ])
     ], className='table', style={'margin': 'auto'})
     ])
@@ -55,12 +54,12 @@ app.layout = html.Div([
                          style={'height': '5%', 'width': '5%'}),
                 html.H2("Bitcoin", style={"margin-left": "1rem"})],
              style={"display": "flex", "align-items": "center",'font-size': '2rem'}),
-    html.Div('${:,.2f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
+    html.Div('${:,}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
     html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col}),
     dcc.Graph(
         id='example-graph',
         figure={
-            'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'blue'}],
+            'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'lightsteelblue'}],
             'layout':{'yaxis': {'range': [min_price, max_price]}}
         }
     ),
