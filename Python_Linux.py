@@ -26,8 +26,8 @@ var = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price
 col = 'red' if var < 0 else 'green'
 min_price = df_day['Price'].min()
 max_price = df_day['Price'].max()
-daily_volatility = round(df_day['Price'].std(),6)
-price_return = round((df_today['Price'].iloc[-1] - df_today['Price'].iloc[0]) / df_today['Price'].iloc[0] * 100,4)
+daily_vol = round(df_day['Price'].std(),6)
+price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,4)
 
 def generate_table():
     table = html.Div([
@@ -37,7 +37,7 @@ def generate_table():
             html.Tbody([
                 html.Tr([html.Td('Min.'), html.Td(min_price)]),
                 html.Tr([html.Td('Max.'), html.Td(max_price)]),
-                html.Tr([html.Td('Vol.'), html.Td(daily_volatility)]),
+                html.Tr([html.Td('Vol.'), html.Td(daily_vol)]),
                 html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
                 html.Tr([html.Td('Open price'), html.Td(df_day['Price'].iloc[0])]),
                 html.Tr([html.Td('Close price'), html.Td(df_day['Price'].iloc[-1])])
