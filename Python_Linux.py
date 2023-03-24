@@ -59,7 +59,7 @@ app.layout = html.Div([
     dcc.Graph(
         id='example-graph',
         figure={
-            'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'lightsteelblue'}],
+            'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'lavender'}],
             'layout':{'yaxis': {'range': [min_price, max_price]}}
         }
     ),
