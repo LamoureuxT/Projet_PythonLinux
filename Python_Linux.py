@@ -60,8 +60,8 @@ app.layout = html.Div([
    ]), 
    html.Div([
        html.Div(className='table-container', children=generate_table(),            
-                style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px', 'flex': '1','height': '50px',
-        'width': '70%'})       
+                style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px', 'flex': '1','height': '100px',
+        'width': '100%'})       
    ])], style={"display": "flex", "flex-direction": "row", "margin-top": "20px"}), 
     
     html.Div(dcc.Graph(id='example-graph',
