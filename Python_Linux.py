@@ -48,14 +48,22 @@ def generate_table():
 
 
 # Créer la mise en page de l'application
-app.layout = html.Div([
+
+app.layout = html.Div([    
+    html.Div(     
+        children=[html.Img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png',                 
+                          style={'height': '5%', 'width': '5%'}),            
+                html.H2("Bitcoin", style={"margin-left": "1rem"}),            
+                html.Div('${:,.0f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
+                html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col})
+        ],
+        style={"display": "flex", "align-items": "center", 'font-size': '2rem', 'flex': '1'}
+    ),
     html.Div(
-        children=[html.Img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png', 
-                         style={'height': '5%', 'width': '5%'}),
-                html.H2("Bitcoin", style={"margin-left": "1rem"})],
-             style={"display": "flex", "align-items": "center",'font-size': '2rem'}),
-    html.Div('${:,.0f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
-    html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col}),
+        className='table-container',
+        children=generate_table(),
+        style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px', 'flex': '1'}
+    ),
     dcc.Graph(
         id='example-graph',
         figure={
@@ -63,8 +71,7 @@ app.layout = html.Div([
             'layout':{'yaxis': {'range': [df['Price'].min(), df['Price'].max()]}}
         }
     ),
-    html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'})
-])
+], style={"display": "flex", "flex-direction": "row"})
 
 if __name__ == '__main__':
      app.run_server(host = "0.0.0.0", port = 8080, debug=True) 
