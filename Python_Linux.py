@@ -55,7 +55,7 @@ app.layout = html.Div([
                 html.H2("Bitcoin", style={"margin-left": "1rem"})],
              style={"display": "flex", "align-items": "center",'font-size': '2rem'}),
     html.Div('${:,.2f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
-    html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color'=col}),
+    html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col}),
     dcc.Graph(
         id='example-graph',
         figure={
@@ -63,7 +63,7 @@ app.layout = html.Div([
             'layout':{'yaxis': {'range': [min_price, max_price]}}
         }
     ),
-    html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'}), 
+    html.Div(className='table-container', children=generate_table(), style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin-top': '20px'}, 
     style={'margin': '0 auto','max-width': '800px','font-family': 'Arial, sans-serif'})
 ])
 
