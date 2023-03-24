@@ -111,7 +111,7 @@ app.layout = html.Div([
             }
         )
     )
-],style={'background-color':'black'})
+],style={'background-color':'black','margin':0 })
 
 
 
