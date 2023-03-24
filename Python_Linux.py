@@ -49,27 +49,89 @@ def generate_table():
 
 # Créer la mise en page de l'application
 
-app.layout = html.Div([    
-   html.Div([html.Div([        
-       html.Div([html.Img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png',                 
-                 style={'height': '5%', 'width': '5%'}),            
-                 html.H2("Bitcoin", style={"margin-left": "1rem"})], 
-                style={"display": "flex", "align-items": "center", 'font-size': '2rem'}),
-       html.Div('${:,.0f}'.format(df['Price'][len(df)-1]),style={'font-size': '3rem'}),
-       html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col}),
-   ]), 
-   html.Div([
-       html.Div(className='table-container', children=generate_table(),            
-                style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin': '20px 20px 20px 20px','flex': '1'})       
-   ])], style={"display": "flex", "flex-direction": "row", "margin-top": "20px"}), 
-    
-    html.Div(dcc.Graph(id='example-graph',
-              figure={'data': [{'x': df['Date'], 'y': df['Price'], 'type': 'line','fill': 'tozeroy', 'fillcolor': 'lavender'}],
-                'layout':{'yaxis': {'range': [df['Price'].min(), df['Price'].max()]}}
-            }
-        )
-    )
-])
+app.layout = html.Div(
+    [
+        html.Link(
+            href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/slate/bootstrap.min.css",
+            rel="stylesheet",
+            integrity="sha384-VFumX9vBIbG1s+6BlIUTNnB4JfjlYz4nmavmctKmyyNL+aX2J1HmS10Kiq3qFAOK",
+            crossorigin="anonymous",
+        ),
+        html.Div(
+            [
+                html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.Img(
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png",
+                                    style={"height": "5%", "width": "5%"},
+                                ),
+                                html.H2(
+                                    "Bitcoin",
+                                    style={"margin-left": "1rem", "color": "white"},
+                                ),
+                            ],
+                            style={
+                                "display": "flex",
+                                "align-items": "center",
+                                "font-size": "2rem",
+                            },
+                        ),
+                        html.Div(
+                            "${:,.0f}".format(df["Price"][len(df) - 1]),
+                            style={"font-size": "3rem", "color": "white"},
+                        ),
+                        html.Div(
+                            "{:.2f}%".format(var),
+                            style={"font-size": "3rem", "color": col},
+                        ),
+                    ]
+                ),
+                html.Div(
+                    className="table-container",
+                    children=generate_table(),
+                    style={
+                        "border": "1px solid #ddd",
+                        "border-radius": "10px",
+                        "margin-top": "20px",
+                        "flex": "1",
+                        "height": "100px",
+                        "width": "100%",
+                    },
+                ),
+            ],
+            style={
+                "display": "flex",
+                "flex-direction": "row",
+                "margin-top": "20px",
+            },
+        ),
+        html.Div(
+            dcc.Graph(
+                id="example-graph",
+                figure={
+                    "data": [
+                        {
+                            "x": df["Date"],
+                            "y": df["Price"],
+                            "type": "line",
+                            "fill": "tozeroy",
+                            "fillcolor": "lavender",
+                        }
+                    ],
+                    "layout": {"yaxis": {"range": [df["Price"].min(), df["Price"].max()]}, "plot_bgcolor": "rgba(0,0,0,0)", "paper_bgcolor": "rgba(0,0,0,0.3)", "font": {"color": "white"}},
+                },
+            ),
+        ),
+    ],
+    style={
+        "background-color": "rgba(0,0,0,0.8)",
+        "color": "white",
+        "font-family": "Arial, sans-serif",
+    },
+)
+
 
 
 if __name__ == '__main__':
