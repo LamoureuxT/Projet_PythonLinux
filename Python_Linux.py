@@ -13,7 +13,7 @@ import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 from datetime import datetime, time, timedelta
 df = pd.read_csv('/home/ec2-user/Projet/bitcoin_price.csv', sep=',', names=['Date', 'Price'])
-
+df['Date'] = pd.to_datetime(df['Date'])
 # Créer l'application Dash
 app = dash.Dash(__name__)
 
