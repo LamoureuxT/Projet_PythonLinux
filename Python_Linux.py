@@ -33,9 +33,9 @@ col = 'red' if var < 0 else 'green'
 def new_report():
     min_price = df_day['Price'].min()
     max_price = df_day['Price'].max()
-    daily_vol = round(df_day['Price'].std(),2)
     price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
-
+    daily_vol = round(price_return.std(),2)
+    
     table = html.Div([
         html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
         html.Table([
@@ -54,8 +54,9 @@ def new_report():
 def previous_report():
     min_price = df_day_1['prix'].min()
     max_price = df_day_1['prix'].max()
-    daily_vol = round(df_day_1['prix'].std(),6)
-    price_return = round((df_day_1['prix'].iloc[-1] - df_day_1['prix'].iloc[0]) / df_day_1['prix'].iloc[0] * 100,4)
+    price_return = round((df_day_1['prix'].iloc[-1] - df_day_1['prix'].iloc[0]) / df_day_1['prix'].iloc[0] * 100,2)
+    daily_vol = round(price_return.std(),2)
+    
 
     table = html.Div([
         html.H3("Daily Report {}".format(yesterday.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
@@ -63,7 +64,7 @@ def previous_report():
             html.Tbody([
                 html.Tr([html.Td('Min.'), html.Td(min_price)]),
                 html.Tr([html.Td('Max.'), html.Td(max_price)]),
-                html.Tr([html.Td('Vol.'), html.Td(daily_vol)]),
+                html.Tr([html.Td('Volatility'), html.Td(daily_vol)]),
                 html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
                 html.Tr([html.Td('Open price'), html.Td(df_day_1['prix'].iloc[0])]),
                 html.Tr([html.Td('Close price'), html.Td(df_day_1['prix'].iloc[-1])])
@@ -91,7 +92,7 @@ app.layout = html.Div([
        html.Div('{:.2f}%'.format(var), style={'font-size': '3rem', 'color':col}),
    ]), 
    html.Div([
-       html.Div(className='table-container', children=generate_table(),            
+       html.Div(className='table-container', children=report(),            
                 style={'border': '1px solid #ddd', 'border-radius': '10px', 'margin': '20px 20px 20px 20px','flex': '1'})       
    ])], style={"display": "flex", "flex-direction": "row", "margin-top": "20px"}), 
     
