@@ -76,7 +76,7 @@ def previous_report():
 def report():
     now = datetime.now() 
     today_8pm = datetime.combine(now.date(), time(hour=20))  
-    if now.hour >= today_at_8pm.hour:  
+    if now.hour >= today_8pm.hour:  
         return new_report()      
     else:
         return previous_report()
