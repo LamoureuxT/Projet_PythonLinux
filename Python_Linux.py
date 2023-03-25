@@ -25,7 +25,7 @@ df_day = df.loc[(df['Date'] >= start_day) & (df['Date'] <= end_day)]
 day_1= datetime.now().date() - timedelta(days=1)
 day_1_start = datetime.combine(day_1, time.min)
 day_1_end = datetime.combine(day_1, time.max)
-df_day_1 = df.loc[(df['date'] >= day_1_start) & (df['date'] <= day_1_end)]
+df_day_1 = df.loc[(df['Date'] >= day_1_start) & (df['Date'] <= day_1_end)]
 var = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
 col = 'red' if var < 0 else 'green'
 
@@ -52,9 +52,9 @@ def new_report():
     return table
 
 def previous_report():
-    min_price = df_day_1['prix'].min()
-    max_price = df_day_1['prix'].max()
-    price_return = round((df_day_1['prix'].iloc[-1] - df_day_1['prix'].iloc[0]) / df_day_1['prix'].iloc[0] * 100,2)
+    min_price = df_day_1['Price'].min()
+    max_price = df_day_1['Price'].max()
+    price_return = round((df_day_1['Price'].iloc[-1] - df_day_1['Price'].iloc[0]) / df_day_1['Price'].iloc[0] * 100,2)
     daily_vol = round(price_return.std(),2)
     
 
@@ -66,8 +66,8 @@ def previous_report():
                 html.Tr([html.Td('Max.'), html.Td(max_price)]),
                 html.Tr([html.Td('Volatility'), html.Td(daily_vol)]),
                 html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
-                html.Tr([html.Td('Open price'), html.Td(df_day_1['prix'].iloc[0])]),
-                html.Tr([html.Td('Close price'), html.Td(df_day_1['prix'].iloc[-1])])
+                html.Tr([html.Td('Open price'), html.Td(df_day_1['Price'].iloc[0])]),
+                html.Tr([html.Td('Close price'), html.Td(df_day_1['Price'].iloc[-1])])
         ])
     ], className='table', style={'margin': 'auto'})
     ])
