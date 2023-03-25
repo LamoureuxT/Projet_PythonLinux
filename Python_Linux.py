@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import plotly.graph_objs as go
 from dash.dependencies import Input, Output
 from datetime import datetime, time, timedelta
+
 df = pd.read_csv('/home/ec2-user/Projet/bitcoin_price.csv', sep=',', names=['Date', 'Price'])
 df['Date'] = pd.to_datetime(df['Date'])
 # Créer l'application Dash
@@ -21,15 +22,20 @@ now = datetime.now().date()
 start_day = datetime.combine(now, time.min)  
 end_day = datetime.combine(now, time.max)     
 df_day = df.loc[(df['Date'] >= start_day) & (df['Date'] <= end_day)] 
-
+day_1= datetime.now().date() - timedelta(days=1)
+day_1_start = datetime.combine(day_1, time.min)
+day_1_end = datetime.combine(day_1, time.max)
+df_day_1 = df.loc[(df['date'] >= day_1_start) & (df['date'] <= day_1_end)]
 var = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
 col = 'red' if var < 0 else 'green'
-min_price = df_day['Price'].min()
-max_price = df_day['Price'].max()
-daily_vol = round(df_day['Price'].std(),2)
-price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
 
-def generate_table():
+
+def new_report():
+    min_price = df_day['Price'].min()
+    max_price = df_day['Price'].max()
+    daily_vol = round(df_day['Price'].std(),2)
+    price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
+
     table = html.Div([
         html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
         html.Table([
@@ -43,12 +49,38 @@ def generate_table():
         ])
     ], className='table', style={'margin': 'auto'})
     ])
-
     return table
 
+def previous_report():
+    min_price = df_day_1['prix'].min()
+    max_price = df_day_1['prix'].max()
+    daily_vol = round(df_day_1['prix'].std(),6)
+    price_return = round((df_day_1['prix'].iloc[-1] - df_day_1['prix'].iloc[0]) / df_day_1['prix'].iloc[0] * 100,4)
 
+    table = html.Div([
+        html.H3("Daily Report {}".format(yesterday.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
+        html.Table([
+            html.Tbody([
+                html.Tr([html.Td('Min.'), html.Td(min_price)]),
+                html.Tr([html.Td('Max.'), html.Td(max_price)]),
+                html.Tr([html.Td('Vol.'), html.Td(daily_vol)]),
+                html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
+                html.Tr([html.Td('Open price'), html.Td(df_day_1['prix'].iloc[0])]),
+                html.Tr([html.Td('Close price'), html.Td(df_day_1['prix'].iloc[-1])])
+        ])
+    ], className='table', style={'margin': 'auto'})
+    ])
+    return table
+
+def report():
+    now = datetime.now() 
+    today_8pm = datetime.combine(now.date(), time(hour=20))  
+    if now.hour >= today_at_8pm.hour:  
+        return new_report()      
+    else:
+        return previous_report()
+    
 # Créer la mise en page de l'application
-
 app.layout = html.Div([    
    html.Div([html.Div([        
        html.Div([html.Img(src='https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/800px-Bitcoin.svg.png',                 
