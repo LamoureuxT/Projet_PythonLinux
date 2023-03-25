@@ -34,7 +34,7 @@ def new_report():
     min_price = df_day['Price'].min()
     max_price = df_day['Price'].max()
     price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
-    daily_vol = round(price_return.std(),2)
+    daily_vol = round(df_day[Price'].std(),2)
     
     table = html.Div([
         html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
@@ -42,7 +42,7 @@ def new_report():
             html.Tbody([
                 html.Tr([html.Td('Min.'), html.Td('${:,.0f}'.format(min_price))]),
                 html.Tr([html.Td('Max.'), html.Td('${:,.0f}'.format(max_price))]),
-                html.Tr([html.Td('Vol.'), html.Td(daily_vol)]),
+                html.Tr([html.Td('Volatility'), html.Td(daily_vol)]),
                 html.Tr([html.Td('Return'), html.Td('{}%'.format(price_return))]),
                 html.Tr([html.Td('Open price'), html.Td('${:,.0f}'.format(df_day['Price'].iloc[0]))]),
                 html.Tr([html.Td('Close price'), html.Td('${:,.0f}'.format(df_day['Price'].iloc[-1]))])
@@ -55,7 +55,7 @@ def previous_report():
     min_price = df_day_1['Price'].min()
     max_price = df_day_1['Price'].max()
     price_return = round((df_day_1['Price'].iloc[-1] - df_day_1['Price'].iloc[0]) / df_day_1['Price'].iloc[0] * 100,2)
-    daily_vol = round(price_return.std(),2)
+    daily_vol = round(df_day_1['Price'].std(),2)
     
 
     table = html.Div([
