@@ -34,7 +34,7 @@ def new_report():
     min_price = df_day['Price'].min()
     max_price = df_day['Price'].max()
     price_return = round((df_day['Price'].iloc[-1] - df_day['Price'].iloc[0]) / df_day['Price'].iloc[0] * 100,2)
-    daily_vol = round(df_day[Price'].std(),2)
+    daily_vol = round(df_day['Price'].std(),2)
     
     table = html.Div([
         html.H3("Daily Report {}".format(now.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
