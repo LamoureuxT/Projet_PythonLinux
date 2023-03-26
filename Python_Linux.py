@@ -59,7 +59,7 @@ def previous_report():
     
 
     table = html.Div([
-        html.H3("Daily Report {}".format(yesterday.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
+        html.H3("Daily Report {}".format(day_1.strftime('%d-%m-%Y')), style={'text-align': 'center'}),
         html.Table([
             html.Tbody([
                 html.Tr([html.Td('Min.'), html.Td(min_price)]),
