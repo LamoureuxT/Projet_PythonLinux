@@ -1,0 +1,4 @@
+## script crontab pour automatiser le projet
+
+*/5 * * * * /bin/bash /home/ec2-user/Projet/script.sh
+*/5 * * * * /bin/bash /home/ec2-user/Projet/Python.sh
